@@ -1,20 +1,16 @@
 const path = require('path');
+const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    entry: [
-        // 'webpack/hot/dev-server',
-        // 'webpack/hot/only-dev-server',
-        path.join(__dirname, './src/index.js')
-    ],
+    entry: {
+        index: path.join(__dirname, './src/index.js'),
+        vendor: ['axios', 'object-assign']
+    },
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'errlogger.js',
-    },
-    devServer: {
-        contentBase: path.resolve(__dirname, 'public'),
-        compress: true,
-        port: 3232,
+        chunkFilename: '[name].js'
     },
     devtool: 'cheap-module-source-map',
     module: {
@@ -35,6 +31,21 @@ module.exports = {
         new HtmlWebpackPlugin({
             inject: true,
             template: path.resolve(__dirname, 'public/index.html'),
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: "vendor",
+            filename: "vendor.js",
+            minChunks: Infinity,
+        }),
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false,
+                reduce_vars: false,
+            },
+            output: {
+                comments: false,
+            },
+            sourceMap: true,
         }),
     ]
 }

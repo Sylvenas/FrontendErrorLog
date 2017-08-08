@@ -1,25 +1,14 @@
 import './utils/polyfill.js';
 import Browser from './utils/browser.js';
+import axios from 'axios';
 
-
-interface optionsStructure {
-    detailedErrors?: boolean,
-    remoteLogging?: boolean,
-    remoteSettings?: remoteSettingsStructure
-}
-interface remoteSettingsStructure {
-    url: string,
-    additionalParams?: {},
-    successCallback?: Function,
-    errorCallback?: Function
-}
 class ErrLogger {
-    options: optionsStructure;
-    browserInfo: any;
-    constructor(userConfig: optionsStructure) {
+    options;
+    browserInfo;
+    constructor(userConfig) {
         if (!userConfig) userConfig = {};
         // Default configuration
-        let defaultConfig: optionsStructure = {
+        let defaultConfig = {
             detailedErrors: true,
             remoteLogging: false,
             remoteSettings: {
@@ -38,7 +27,6 @@ class ErrLogger {
         window.addEventListener('error', this.errListener);
     }
     errListener = e => {
-        console.log(this.browserInfo);
         if (this.options.detailedErrors) {
             this.detailedErrors(e);
         }
@@ -80,27 +68,19 @@ class ErrLogger {
         var url = remoteSettings.url;
         var data = this.errorData(e);
         var setData = Object.assign(data, remoteSettings.additionalParams);
+        console.log(setData)
         var params = this.serializeData(setData);
 
-        http.open("POST", url, true);
-        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        http.send(params);
-
-        http.onreadystatechange = function () {
-            if (http.readyState == 4 && http.status == 200) {
-                if (http.readyState == XMLHttpRequest.DONE) {
-                    if (remoteSettings.successCallback) {
-                        remoteSettings.successCallback();
-                    }
-                } else {
-                    if (remoteSettings.errorCallback) {
-                        remoteSettings.errorCallback();
-                    } else {
-                        throw new Error('Remote error logging failed!');
-                    }
-                }
-            }
-        };
+        axios.post(url, setData).then(res => {
+            //var sourceMap = window.sourceMap;
+            // console.log(sourceMap)
+            // let smc = new sourceMap.SourceMapConsumer(res.data);
+            // let lineColumn = smc.originalPositionFor({
+            //     line: data.line,
+            //     column: data.column
+            // })
+            // console.log(lineColumn)
+        })
     }
     errorData(e) {
         let filename = e.filename.lastIndexOf('/');
@@ -123,6 +103,9 @@ class ErrLogger {
         return Object.keys(params).map(function (k) {
             return encodeURIComponent(k) + "=" + encodeURIComponent(params[k]);
         }).join('&');
+    }
+    getSourceMap() {
+
     }
 
 }

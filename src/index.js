@@ -5,10 +5,10 @@ let errlogger = new ErrLogger({
     remoteSettings: { url: 'http://localhost:3333/' }
 });
 let a = {};
-let b=null;
+let HELLO=null;
 function myFunction(a, b) {
     return a * b;
 }
 // console.log(a.b.c)
-console.log(b[0])
+console.log(HELLO[0])
 myFunction();

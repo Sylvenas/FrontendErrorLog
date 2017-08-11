@@ -68,18 +68,10 @@ class ErrLogger {
         var url = remoteSettings.url;
         var data = this.errorData(e);
         var setData = Object.assign(data, remoteSettings.additionalParams);
-        console.log(setData)
         var params = this.serializeData(setData);
 
         axios.post(url, setData).then(res => {
-            //var sourceMap = window.sourceMap;
-            // console.log(sourceMap)
-            // let smc = new sourceMap.SourceMapConsumer(res.data);
-            // let lineColumn = smc.originalPositionFor({
-            //     line: data.line,
-            //     column: data.column
-            // })
-            // console.log(lineColumn)
+            console.log(res.data);
         })
     }
     errorData(e) {
@@ -104,10 +96,6 @@ class ErrLogger {
             return encodeURIComponent(k) + "=" + encodeURIComponent(params[k]);
         }).join('&');
     }
-    getSourceMap() {
-
-    }
-
 }
 
 export default ErrLogger;

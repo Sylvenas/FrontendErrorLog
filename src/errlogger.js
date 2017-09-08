@@ -3,8 +3,6 @@ import Browser from './utils/browser.js';
 import axios from 'axios';
 
 class ErrLogger {
-    options;
-    browserInfo;
     constructor(userConfig) {
         if (!userConfig) userConfig = {};
         // Default configuration

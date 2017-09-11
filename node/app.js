@@ -22,7 +22,7 @@ var createServer = function () {
 
     //建立socket链接
     io.on('connection', function (socket) {
-        console.log('连接成功!')
+        console.log('web-socket connected successfully!')
     })
 
     function setData(data) {
@@ -45,16 +45,18 @@ var createServer = function () {
         var obj = req.body;
         var _res = res;
 
+        console.log(obj)
+
         fs.readFile('./map/errlogger.js.map', 'utf8', function (err, data) {
-            console.log(data)
-            var smc = new sourceMap.SourceMapConsumer(data);
+            console.log(typeof data)
+            var smc = new sourceMap.SourceMapConsumer(JSON.parse(data));
             var sourse = smc.originalPositionFor({
                 line: req.body.line,
                 column: req.body.column
             })
             obj.source = sourse;
             setData(obj);
-            db.insert(JSON.stringify(obj));
+            db.insert(JSON.parse(JSON.stringify(obj)));
             _res.send('错误日志插入数据库成功');
         });
     });

@@ -10,6 +10,7 @@
 
 <body>
     <div id="main" style="width: 600px;height:400px;"></div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdn.bootcss.com/echarts/3.6.2/echarts.min.js"></script>
     <script src="./lib/socket.io.slim.js"></script>
     <script>
@@ -79,10 +80,10 @@
         //         }]
         //     });
         // }, 1000);
-        var socket = io.connect('http://localhost:3333/');
+        var socket = io.connect('http://39.108.124.75:3333/');
 
         socket.on('getData', function (res) {
-            console.log(JSON.parse( res));
+            console.log(JSON.parse(res));
             // data.shift();
             data.push(randomData());
 
@@ -92,6 +93,14 @@
                 }]
             });
         });
+
+        axios.post('http://39.108.124.75:3333/getErrinfo', {
+            hello: 1
+        }).then(res => {
+            console.log(res);
+        }, err => {
+
+        })
     </script>
 </body>
 

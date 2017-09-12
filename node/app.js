@@ -47,7 +47,7 @@ var createServer = function () {
 
         console.log(obj)
 
-        fs.readFile('./map/errlogger.js.map', 'utf8', function (err, data) {
+        fs.readFile('./map/app.js.map', 'utf8', function (err, data) {
             console.log(typeof data)
             var smc = new sourceMap.SourceMapConsumer(JSON.parse(data));
             var sourse = smc.originalPositionFor({

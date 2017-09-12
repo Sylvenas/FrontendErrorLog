@@ -4,11 +4,12 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: [
-        path.join(__dirname, './src/errlogger.js'),
+        path.join(__dirname, './index.js'),
     ],
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'errlogger.js',
+        filename: 'app.js',
+        chunkFilename: '[name].js'
     },
     devtool: 'source-map',
     module: {

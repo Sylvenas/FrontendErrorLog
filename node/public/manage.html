@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>错误收集管理平台</title>
+</head>
+
+<body>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        axios.post('/getErrinfo', { hello: 1 })
+            .then(function (res) {
+                console.log(res);
+            }, function (err) {
+                console.log(err);
+            })
+    </script>
+</body>
+
+</html>

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core'
+import { LoginService } from '../services/login/login.service'
 
 @Component({
     selector: 'app-logon',
@@ -7,6 +8,11 @@ import { Component } from '@angular/core'
 })
 
 export class Login {
-    handleClick(value) {
+    constructor( private loginService:LoginService){}
+    handleLogin(userInfo) {
+        this.loginService.login(userInfo).subscribe(res=>{
+            console.log(res);
+        })
+        //console.log(userInfo);
     }
 }

@@ -18,9 +18,17 @@ exports.insert = function (data) {
     collection.insertOne(data)
 }
 
-exports.query = function (cond,callback) {
+exports.query = function (cond, callback) {
     var collection = db.collection('json');
     collection.find().toArray(function (err, docs) {
+        if (err) throw err;
+        callback(docs);
+    })
+}
+
+exports.login = function (userinfo, callback) {
+    var collection = db.collection('user');
+    collection.find(userinfo).toArray(function (err, docs) {
         if (err) throw err;
         callback(docs);
     })

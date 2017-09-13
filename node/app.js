@@ -30,7 +30,7 @@ var createServer = function () {
     }
 
 
-    app.use(express.static('public'));
+    app.use(express.static('./web/dist'));
 
     app.use(bodyParser.json());
 
@@ -45,10 +45,7 @@ var createServer = function () {
         var obj = req.body;
         var _res = res;
 
-        console.log(obj)
-
         fs.readFile('./map/app.js.map', 'utf8', function (err, data) {
-            console.log(typeof data)
             var smc = new sourceMap.SourceMapConsumer(JSON.parse(data));
             var sourse = smc.originalPositionFor({
                 line: req.body.line,
@@ -65,6 +62,26 @@ var createServer = function () {
         var obj = req.body;
         db.query(obj, function (docs) {
             res.send(docs)
+        })
+    });
+
+    app.post('/login', function (req, res) {
+        var obj = req.body,
+            data;
+        db.login(obj, function (docs) {
+            console.log(docs, obj)
+            if (docs.length > 0) {
+                data = {
+                    status: true,
+                    msg: '登录成功'
+                }
+            } else {
+                data = {
+                    status: false,
+                    msg: '密码不正确'
+                }
+            }
+            res.send(JSON.stringify(data))
         })
     })
 }

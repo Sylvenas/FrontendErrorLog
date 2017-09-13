@@ -1,7 +1,7 @@
 {
-  "name": "y",
+  "name": "frontend-error-log",
   "version": "1.0.0",
-  "description": "font end error log",
+  "description": "front end error log",
   "main": "errlogger.js",
   "scripts": {
     "start": "webpack-dev-server --config webpack.config.js --progress --colors --hot --inline",

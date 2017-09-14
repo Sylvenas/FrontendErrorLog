@@ -1,8 +1,10 @@
 var express = require('express');
+var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var sourceMap = require('source-map');
 var axios = require('axios');
 var fs = require('fs');
+var path = require('path');
 
 var app = express();
 var server = require('http').createServer(app);
@@ -34,13 +36,21 @@ var createServer = function () {
 
     app.use(bodyParser.json());
 
+    app.use(cookieParser());
+
     app.use(function (req, res, next) {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         next();
     });
 
-    app.post('/sendErrInfo', function (req, res) {
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, './web/dist/index.html'));
+    });
+
+
+
+    app.post('/api/sendErrInfo', function (req, res) {
         var _this = this;
         var obj = req.body;
         var _res = res;
@@ -58,23 +68,26 @@ var createServer = function () {
         });
     });
 
-    app.post('/getErrinfo', function (req, res) {
+    app.post('/api/getErrinfo', function (req, res) {
         var obj = req.body;
         db.query(obj, function (docs) {
             res.send(docs)
         })
     });
 
-    app.post('/login', function (req, res) {
+    app.post('/api/login', function (req, res) {
         var obj = req.body,
             data;
         db.login(obj, function (docs) {
-            console.log(docs, obj)
             if (docs.length > 0) {
                 data = {
                     status: true,
                     msg: '登录成功'
                 }
+                res.cookie('islogged', 1, {
+                    maxAge: 1000 * 60 * 60 * 24,
+                    //httpOnly: true
+                })
             } else {
                 data = {
                     status: false,

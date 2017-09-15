@@ -9,3 +9,16 @@ interface errType {
   userAgent: string,                // 具体浏览器信息
   datetime: string,                 // 错误发生时间
 }
+
+let a = {
+  result: { ok: 1, n: 1 },
+  ops: [{
+    email: 'asd@we.com',
+    username: 'www',
+    password: 'www',
+    projects: [],
+    _id: '59bbbe1f4d27b63bd91ac03d'
+  }],
+  insertedCount: 1,
+  insertedIds: ['59bbbe1f4d27b63bd91ac03d']
+}

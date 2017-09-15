@@ -1,0 +1,41 @@
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NgClass } from '@angular/common';
+import { Router } from '@angular/router';
+
+import { JoinService } from '../services/join/join.service';
+
+@Component({
+  selector: 'app-join',
+  templateUrl: './join.component.html',
+  styleUrls: ['./join.component.css']
+})
+export class JoinComponent implements OnInit {
+
+  private joinForm: FormGroup;
+  private email: string = '';
+  private username: string = '';
+  private password: string = '';
+
+  private isRegistered: boolean = false;
+
+  constructor(private fb: FormBuilder, private joinService: JoinService, private router: Router) {
+    this.joinForm = fb.group({
+      'email': [null, Validators.compose([Validators.required, Validators.email])],
+      'username': [null, Validators.required,],
+      'password': [null, Validators.compose([Validators.required, Validators.minLength(6)])]
+    })
+  }
+
+  ngOnInit() {
+  }
+  handleJoin(joinInfo) {
+    this.joinService.join(joinInfo).subscribe(res => {
+      if (res.status) {
+        this.router.navigate(['/preview'])
+      } else {
+        this.isRegistered = true;
+      }
+    })
+  }
+}

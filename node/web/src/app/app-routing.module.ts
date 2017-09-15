@@ -6,12 +6,14 @@ import { AuthGuard } from './guard/auth.guard';
 import { AppComponent } from './app.component';
 import { Home } from './home/home.component';
 import { Login } from './login/login.component';
+import { JoinComponent } from './join/join.component';
 import { PreviewComponent } from './preview/preview.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
     { path: 'home', component: Home },
     { path: 'login', component: Login },
+    { path: 'join', component: JoinComponent },
     { path: 'preview', component: PreviewComponent, canActivate: [AuthGuard] }
 ];
 

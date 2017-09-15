@@ -74,7 +74,7 @@ var createServer = function () {
             res.send(docs)
         })
     });
-
+    //用户登录
     app.post('/api/login', function (req, res) {
         var obj = req.body,
             data;
@@ -84,7 +84,7 @@ var createServer = function () {
                     status: true,
                     msg: '登录成功'
                 }
-                res.cookie('islogged', 1, {
+                res.cookie('islogged', docs[0]._id, {
                     maxAge: 1000 * 60 * 60 * 24,
                     //httpOnly: true
                 })
@@ -96,6 +96,51 @@ var createServer = function () {
             }
             res.send(JSON.stringify(data))
         })
+    });
+    //用户注册
+    app.post('/api/join', function (req, res) {
+        var obj = Object.assign(req.body, { projects: [] }),
+            data;
+        db.join(obj, function (newUserId) {
+            if (newUserId) {
+                data = {
+                    status: true,
+                    msg: '注册成功'
+                }
+                res.cookie('islogged', newUserId, {
+                    maxAge: 1000 * 60 * 60 * 24,
+                    //httpOnly: true
+                })
+            } else {
+                data = {
+                    status: false,
+                    msg: '注册失败'
+                }
+            }
+            res.send(JSON.stringify(data))
+        })
+    });
+
+
+    //新建项目
+    app.post('/api/newProject', function (req, res) {
+
+    })
+    //单个项目上传和修改soursemap文件
+    app.post('/api/uploadSM',function(req,res){
+        
+    })
+
+
+
+
+    //根据用户查询错误信息
+    app.post('/api/getErrInfoByUserId', function (req, res) {
+
+    })
+    //根据项目ID查询具体信息
+    app.post('/api/getErrByProjectId', function (req, res) {
+
     })
 }
 

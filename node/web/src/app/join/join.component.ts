@@ -22,7 +22,7 @@ export class JoinComponent implements OnInit {
   constructor(private fb: FormBuilder, private joinService: JoinService, private router: Router) {
     this.joinForm = fb.group({
       'email': [null, Validators.compose([Validators.required, Validators.email])],
-      'username': [null, Validators.required,],
+      'username': [null, Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z_0-9]+$'), Validators.minLength(4), Validators.maxLength(15)])],
       'password': [null, Validators.compose([Validators.required, Validators.minLength(6)])]
     })
   }

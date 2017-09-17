@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginService } from '../services/login/login.service';
 
 @Component({
@@ -12,7 +13,18 @@ export class Login {
 
     private passwordErr: boolean = false;
 
-    constructor(private loginService: LoginService, private router: Router) { }
+
+    private loginForm: FormGroup;
+    private email: string = '';
+    private username: string = '';
+    private password: string = '';
+
+    constructor(private fb: FormBuilder, private loginService: LoginService, private router: Router) {
+        this.loginForm = fb.group({
+            'username': [null, Validators.required],
+            'password': [null, Validators.required]
+        })
+    }
 
     handleLogin(userInfo) {
         this.loginService.login(userInfo).subscribe(res => {

@@ -10,7 +10,8 @@ import { LoginService } from '../services/login/login.service';
 })
 export class PreviewComponent implements OnInit {
 
-  private imgs: Array<string> = ['https://images.unsplash.com/photo-1496347646636-ea47f7d6b37b?dpr=1&auto=compress,format&fit=max&w=376&q=80&cs=tinysrgb&crop=',
+  private imgs: Array<string> = [
+    'https://images.unsplash.com/photo-1496347646636-ea47f7d6b37b?dpr=1&auto=compress,format&fit=max&w=376&q=80&cs=tinysrgb&crop=',
     'https://images.unsplash.com/photo-1452696024259-cb7474e79947?dpr=1&auto=compress,format&fit=max&w=376&q=80&cs=tinysrgb&crop=',
     'https://images.unsplash.com/photo-1416163026265-0bc340a710e4?dpr=1&auto=compress,format&fit=max&w=376&q=80&cs=tinysrgb&crop=',
     'https://images.unsplash.com/43/unsplash_522b9cc0386f1_1.jpg?dpr=1&auto=compress,format&fit=crop&w=300&h=80&q=80&cs=tinysrgb&crop=',

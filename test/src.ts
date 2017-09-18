@@ -22,3 +22,11 @@ let a = {
   insertedCount: 1,
   insertedIds: ['59bbbe1f4d27b63bd91ac03d']
 }
+
+let b = {
+  "projects": {
+    "$elemMatch": {
+      "pName": 'cpp'
+    }
+  }
+}

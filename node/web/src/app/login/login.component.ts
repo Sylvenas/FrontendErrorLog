@@ -13,7 +13,6 @@ export class Login {
 
     private passwordErr: boolean = false;
 
-
     private loginForm: FormGroup;
     private email: string = '';
     private username: string = '';

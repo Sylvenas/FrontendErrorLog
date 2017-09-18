@@ -1,4 +1,5 @@
 var MongoClient = require('mongodb').MongoClient;
+var ObjectId = require('mongodb').ObjectId;
 const DB_CONN_STR = 'mongodb://localhost:27017/frontenderr';
 var db;
 
@@ -26,6 +27,7 @@ exports.query = function (cond, callback) {
     })
 }
 
+// 登录
 exports.login = function (userinfo, callback) {
     var collection = db.collection('user');
     collection.find(userinfo).toArray(function (err, docs) {
@@ -33,7 +35,7 @@ exports.login = function (userinfo, callback) {
         callback(docs);
     })
 }
-
+// 注册
 exports.join = function (joininfo, callback) {
     var collection = db.collection('user');
     collection.find({ username: joininfo.username }).toArray(function (err, docs) {
@@ -49,4 +51,27 @@ exports.join = function (joininfo, callback) {
         }
     })
 }
+// 新建项目
+exports.newProject = function (projectInfo, callback) {
+    var collection = db.collection('user');
+    collection.find({ "projects": { "$elemMatch": { "pName": projectInfo.pInfo.pName } } }).toArray(function (err, docs) {
+        if (err) throw err;
+        if (docs.length > 0) {
+            callback(false)
+        } else {
+            collection.updateOne({ "_id": ObjectId(projectInfo.userId) }, { $push: { 'projects': projectInfo.pInfo } }, function (err, doc) {
+                if (err) throw err;
+                callback(doc);
+            })
+        }
+    })
+}
 
+//根据用户查询项目集合
+exports.getColsByUserId = function (userId, callback) {
+    var collection = db.collection('user');
+    collection.find({ "_id": ObjectId(userId) }).toArray(function (err, docs) {
+        if (err) throw err;
+        callback(docs);
+    })
+}

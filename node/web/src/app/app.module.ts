@@ -9,6 +9,7 @@ import { AuthGuard } from './guard/auth.guard';
 
 import { LoginService } from './services/login/login.service';
 import { JoinService } from './services/join/join.service';
+import { PreviewService } from './services/preview/preview.service';
 
 import { AppComponent } from './app.component';
 import { Home } from './home/home.component';
@@ -34,6 +35,7 @@ import { JoinComponent } from './join/join.component';
   providers: [
     LoginService,
     JoinService,
+    PreviewService,
     AuthGuard
   ],
   bootstrap: [AppComponent]

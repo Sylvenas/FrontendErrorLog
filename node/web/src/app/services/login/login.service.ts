@@ -7,7 +7,7 @@ export class LoginService {
 
   private isUserLoggedIn: boolean = false;
 
-  constructor(public http: Http) {
+  constructor(private http: Http) {
   }
 
   public login(userInfo) {
@@ -15,16 +15,15 @@ export class LoginService {
   }
 
   public getUserLoggedIn(): boolean {
-    if (this.getCookie('islogged')) {
+    if (this.getUserId('islogged')) {
       this.isUserLoggedIn = true;
     } else {
       this.isUserLoggedIn = false;
     }
     return this.isUserLoggedIn;
   }
-
-  private getCookie(name): string {
-    var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)"); //正则匹配
+  public getUserId(name): string {
+    var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
     if (arr = document.cookie.match(reg)) {
       return encodeURI(arr[2]);
     }

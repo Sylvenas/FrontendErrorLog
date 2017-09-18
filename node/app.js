@@ -5,12 +5,14 @@ var sourceMap = require('source-map');
 var axios = require('axios');
 var fs = require('fs');
 var path = require('path');
+var uuidv4 = require('uuid/v4');
 
 var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 
 var db = require('./db');
+
 
 var server = server.listen(3333, function () {
     var host = server.address().address;
@@ -79,12 +81,13 @@ var createServer = function () {
         var obj = req.body,
             data;
         db.login(obj, function (docs) {
+            console.log('islogged：' + encodeURI(docs[0]._id))
             if (docs.length > 0) {
                 data = {
                     status: true,
                     msg: '登录成功'
                 }
-                res.cookie('islogged', docs[0]._id, {
+                res.cookie('islogged', encodeURI(docs[0]._id), {
                     maxAge: 1000 * 60 * 60 * 24,
                     //httpOnly: true
                 })
@@ -124,19 +127,45 @@ var createServer = function () {
 
     //新建项目
     app.post('/api/newProject', function (req, res) {
-
+        var projectInfo = req.body;
+        Object.assign(projectInfo.pInfo, { pId: uuidv4() })
+        db.newProject(projectInfo, function (doc) {
+            if (doc) {
+                data = {
+                    status: true,
+                    msg: '新建项目成功'
+                }
+            } else {
+                data = {
+                    status: false,
+                    msg: '项目已存在不能重复添加'
+                }
+            }
+            res.send(JSON.stringify(data))
+        })
     })
     //单个项目上传和修改soursemap文件
-    app.post('/api/uploadSM',function(req,res){
-        
+    app.post('/api/uploadSM', function (req, res) {
+
     })
 
 
 
 
     //根据用户查询错误信息
-    app.post('/api/getErrInfoByUserId', function (req, res) {
-
+    app.post('/api/getProjectsByUserId', function (req, res) {
+        var userId = req.body.userId;
+        db.getColsByUserId(userId, function (docs) {
+            var data = {
+                status: true,
+                msg: '查询成功',
+                data: {
+                    projects:docs[0].projects,
+                    username:docs[0].username
+                }
+            }
+            res.send(JSON.stringify(data))
+        })
     })
     //根据项目ID查询具体信息
     app.post('/api/getErrByProjectId', function (req, res) {

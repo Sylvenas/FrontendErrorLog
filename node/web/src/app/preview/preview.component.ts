@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PreviewService } from '../services/preview/preview.service';
@@ -26,15 +26,18 @@ export class PreviewComponent implements OnInit {
   private username: string = '';
 
   private newProjectForm: FormGroup;
-  private fileUploadForm:FormGroup;
+  private fileUploadForm: FormGroup;
+
+  @ViewChild('fileUpaload') fileUpaload;
 
   constructor(private fb: FormBuilder, private router: Router, private previewService: PreviewService, private loginService: LoginService) {
     this.newProjectForm = fb.group({
-      'pName': [null, Validators.required],
-      'pDirector': [null, Validators.required]
+      pName: [null, Validators.required],
+      pDirector: [null, Validators.required]
     });
-    this.fileUploadForm=fb.group({
-      'fileList':[null,Validators.required]
+    this.fileUploadForm = fb.group({
+      fileUpaload: ['', Validators.requiredTrue],
+      hello: 'nihao'
     })
   }
 
@@ -77,8 +80,18 @@ export class PreviewComponent implements OnInit {
     })
   }
 
-  private handleFileUpload(filesInfo){
-    console.log(filesInfo);
+  private fileUploadChange() {
+    let fileBrowser = this.fileUpaload.nativeElement;
+    if (fileBrowser.files && fileBrowser.files[0]) {
+      console.log(fileBrowser.files)
+    }
+  }
+
+  private handleFileUpload() {
+    let fileBrowser = this.fileUpaload.nativeElement;
+    if (fileBrowser.files && fileBrowser.files[0]) {
+      console.log(fileBrowser.files)
+    }
   }
 
   private linkToProDetails(col) {

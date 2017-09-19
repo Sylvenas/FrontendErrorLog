@@ -50,9 +50,9 @@
           <div class="arrow fileUpload-arrow"></div>
           <form [formGroup]='fileUploadForm' (ngSubmit)='handleFileUpload(fileUploadForm.value)' class="newFrom-content fileUpload-form">
             <label for="" class="form-label">Project SourceMap</label>
-            <input type="text" class="form-control file-list">
+            <input type="text" class="form-control file-list" formControlName='hello'>
             <label for="" class="browse">Browse</label>
-            <input type="file" multiple class="file-upload" formControlName='fileList'>
+            <input type="file" multiple class="file-upload" formControlName='fileUpaload' #fileUpaload (change)='fileUploadChange()'>
             <div class="form-item">
               <input type="submit" value="Save" class="btn-save" [disabled]="!fileUploadForm.valid" [ngClass]="{'btn-disabled':!fileUploadForm.valid}">
               <input type="button" value="cancel" (click)='showFileUpload(col)' class="btn-cancel">

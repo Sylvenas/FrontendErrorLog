@@ -51,8 +51,8 @@ var createServer = function () {
     });
 
 
-
-    app.post('/api/sendErrInfo', function (req, res) {
+    //插入错误日志
+    app.post('/sendErrInfo', function (req, res) {
         var _this = this;
         var obj = req.body;
         var _res = res;
@@ -149,9 +149,6 @@ var createServer = function () {
 
     })
 
-
-
-
     //根据用户查询错误信息
     app.post('/api/getProjectsByUserId', function (req, res) {
         var userId = req.body.userId;
@@ -160,16 +157,26 @@ var createServer = function () {
                 status: true,
                 msg: '查询成功',
                 data: {
-                    projects:docs[0].projects,
-                    username:docs[0].username
+                    projects: docs[0].projects,
+                    username: docs[0].username
                 }
             }
             res.send(JSON.stringify(data))
         })
     })
     //根据项目ID查询具体信息
-    app.post('/api/getErrByProjectId', function (req, res) {
-
+    app.post('/api/getErrInfosByProId', function (req, res) {
+        var proId = req.body;
+        db.getErrInfosByProId(proId, function (docs) {
+            var data = {
+                status: true,
+                msg: '查询成功',
+                data: {
+                    errors: docs
+                }
+            }
+            res.send(JSON.stringify(data))
+        })
     })
 }
 

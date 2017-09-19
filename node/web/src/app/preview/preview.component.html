@@ -23,8 +23,8 @@
             <input type="text" class="form-control" formControlName='pDirector'>
           </div>
           <div class="form-item">
-            <input type="submit" value="Save" class="btn-save">
-            <input type="button" value="cancel" class="btn-cancel">
+            <input type="submit" value="Save" class="btn-save"  [disabled]="!newProjectForm.valid" [ngClass]="{'btn-disabled':!newProjectForm.valid}">
+            <input type="button" value="cancel" (click)='showNewFrom()' class="btn-cancel">
           </div>
         </form>
       </div>
@@ -41,8 +41,25 @@
     <div class='container'>
       <a class='file-info'>
         <div class='file-info-date'>{{col.updateTime | date : mediumDate}}</div>
-        <p class='file-info-name'>{{col.pName}}</p>
+        <span class='file-info-name' (click)='linkToProDetails(col)'>{{col.pName}}</span>
+        <p class='file-info-id'>{{col.pId}}</p>
       </a>
+      <div class="file-upload-container">
+        <img src="../../assets/fileUpload.png" alt="fileUpload" (click)='showFileUpload(col)'>
+        <div class="newFrom" *ngIf='col.showFileUpload'>
+          <div class="arrow fileUpload-arrow"></div>
+          <form [formGroup]='fileUploadForm' (ngSubmit)='handleFileUpload(fileUploadForm.value)' class="newFrom-content fileUpload-form">
+            <label for="" class="form-label">Project SourceMap</label>
+            <input type="text" class="form-control file-list">
+            <label for="" class="browse">Browse</label>
+            <input type="file" multiple class="file-upload" formControlName='fileList'>
+            <div class="form-item">
+              <input type="submit" value="Save" class="btn-save" [disabled]="!fileUploadForm.valid" [ngClass]="{'btn-disabled':!fileUploadForm.valid}">
+              <input type="button" value="cancel" (click)='showFileUpload(col)' class="btn-cancel">
+            </div>
+          </form>
+        </div>
+      </div>
       <div class='author-info'>
         <span class='author-info-container'>
           <span class='author-info-avatar'>
@@ -50,10 +67,10 @@
               <img class='author-info-avatar-img' alt='user avatar' src='https://images.unsplash.com/placeholder-avatars/extra-large.jpg?dpr=1&auto=compress,format&fit=crop&w=64&h=64&q=80&cs=tinysrgb&crop=faces&bg=fff' />
               </a>
           </span>
-          <div class='author-info-name'>
-            <a class='author-info-name-link'>{{col.pDirector}}</a>
-          </div>
+        <div class='author-info-name'>
+          <a class='author-info-name-link'>{{col.pDirector}}</a>
+        </div>
         </span>
       </div>
+    </div>
   </div>
-</div>

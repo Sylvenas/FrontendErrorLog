@@ -14,19 +14,6 @@ exports.connect = function (callback) {
     });
 }
 
-exports.insert = function (data) {
-    var collection = db.collection('json');
-    collection.insertOne(data)
-}
-
-exports.query = function (cond, callback) {
-    var collection = db.collection('json');
-    collection.find().toArray(function (err, docs) {
-        if (err) throw err;
-        callback(docs);
-    })
-}
-
 // 登录
 exports.login = function (userinfo, callback) {
     var collection = db.collection('user');
@@ -74,4 +61,18 @@ exports.getColsByUserId = function (userId, callback) {
         if (err) throw err;
         callback(docs);
     })
+}
+
+//根据项目ID查询具体错误信息
+exports.getErrInfosByProId = function (proId, callback) {
+    var col = db.collection('projectErrors');
+    col.find(proId).toArray(function (err, docs) {
+        if (err) throw err;
+        callback(docs)
+    })
+}
+
+exports.insert = function (data) {
+    var collection = db.collection('projectErrors');
+    collection.insertOne(data)
 }

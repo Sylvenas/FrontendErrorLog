@@ -10,12 +10,14 @@ import { AuthGuard } from './guard/auth.guard';
 import { LoginService } from './services/login/login.service';
 import { JoinService } from './services/join/join.service';
 import { PreviewService } from './services/preview/preview.service';
+import { ProjectService } from './services/project/project.service'
 
 import { AppComponent } from './app.component';
 import { Home } from './home/home.component';
 import { Login } from './login/login.component';
 import { PreviewComponent } from './preview/preview.component';
 import { JoinComponent } from './join/join.component';
+import { ProjectComponent } from './project/project.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,7 @@ import { JoinComponent } from './join/join.component';
     Login,
     PreviewComponent,
     JoinComponent,
+    ProjectComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,6 +39,7 @@ import { JoinComponent } from './join/join.component';
     LoginService,
     JoinService,
     PreviewService,
+    ProjectService,
     AuthGuard
   ],
   bootstrap: [AppComponent]

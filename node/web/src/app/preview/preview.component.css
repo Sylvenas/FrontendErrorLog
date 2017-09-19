@@ -309,3 +309,23 @@
     font-size: 12px;
     margin-top: 5px;
 }
+
+.file-upload-container{
+    position: absolute;
+    right:20px;
+    top:25px;
+}
+.file-info-id{
+    font-size: 13px;
+    color:#fff;
+}
+.fileUpload-form{
+    top:-40px;
+}
+.fileUpload-arrow{
+    position: relative;
+    bottom: 25px;
+}
+.btn-disabled{
+    background-color: #c4e4c7;
+}

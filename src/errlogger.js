@@ -11,6 +11,7 @@ class ErrLogger {
             remoteLogging: false,
             remoteSettings: {
                 url: null,
+                proId: null,
                 additionalParams: null,
                 successCallback: null,
                 errorCallback: null
@@ -61,14 +62,16 @@ class ErrLogger {
         } else if (remoteSettings.additionalParams && typeof remoteSettings.additionalParams !== 'object') {
             throw new Error('Invalid data type, additionalParams should be a valid object');
         }
+        if (!remoteSettings.proId) {
+            throw new Error('Invalid data type, proId should be a string');
+        }
 
         var http = new XMLHttpRequest();
         var url = remoteSettings.url;
         var data = this.errorData(e);
-        var setData = Object.assign(data, remoteSettings.additionalParams);
-        var params = this.serializeData(setData);
+        var params = Object.assign(data, remoteSettings.additionalParams, { proId: remoteSettings.proId });
 
-        axios.post(url, setData).then(res => {
+        axios.post(url, params).then(res => {
             console.log(res.data);
         })
     }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { PreviewService } from '../services/preview/preview.service';
 import { LoginService } from '../services/login/login.service';
 
@@ -25,11 +26,15 @@ export class PreviewComponent implements OnInit {
   private username: string = '';
 
   private newProjectForm: FormGroup;
+  private fileUploadForm:FormGroup;
 
-  constructor(private fb: FormBuilder, private previewService: PreviewService, private loginService: LoginService) {
+  constructor(private fb: FormBuilder, private router: Router, private previewService: PreviewService, private loginService: LoginService) {
     this.newProjectForm = fb.group({
       'pName': [null, Validators.required],
       'pDirector': [null, Validators.required]
+    });
+    this.fileUploadForm=fb.group({
+      'fileList':[null,Validators.required]
     })
   }
 
@@ -48,6 +53,11 @@ export class PreviewComponent implements OnInit {
   private showNewFrom() {
     this.isShowNewForm = !this.isShowNewForm;
   }
+
+  private showFileUpload(col) {
+    col.showFileUpload = !col.showFileUpload;
+  }
+
   private handleNewProject(projectInfo) {
     let userId = this.loginService.getUserId('islogged');
     Object.assign(projectInfo, { updateTime: new Date().getTime() })
@@ -65,5 +75,13 @@ export class PreviewComponent implements OnInit {
         this.isHavePro = true;
       }
     })
+  }
+
+  private handleFileUpload(filesInfo){
+    console.log(filesInfo);
+  }
+
+  private linkToProDetails(col) {
+    this.router.navigate(['/project', col.pId]);
   }
 }

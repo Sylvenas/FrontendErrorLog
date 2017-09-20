@@ -36,7 +36,7 @@
 <div class="main-root">
   <div *ngFor="let col of collections;let i = index" class="root-animation">
     <div class='place-holder'>
-      <img src={{imgs[i]}} alt="">
+      <img src={{imgs[i]}} alt="background" class="place-holder-img">
     </div>
     <div class='container'>
       <a class='file-info'>
@@ -44,15 +44,15 @@
         <span class='file-info-name' (click)='linkToProDetails(col)'>{{col.pName}}</span>
         <p class='file-info-id'>{{col.pId}}</p>
       </a>
-      <div class="file-upload-container">
+      <div class="file-upload-container" >
         <img src="../../assets/fileUpload.png" alt="fileUpload" (click)='showFileUpload(col)'>
         <div class="newFrom" *ngIf='col.showFileUpload'>
           <div class="arrow fileUpload-arrow"></div>
-          <form [formGroup]='fileUploadForm' (ngSubmit)='handleFileUpload(fileUploadForm.value)' class="newFrom-content fileUpload-form">
+          <form [formGroup]='fileUploadForm' (ngSubmit)='handleFileUpload(col)' class="newFrom-content fileUpload-form">
             <label for="" class="form-label">Project SourceMap</label>
             <input type="text" class="form-control file-list" formControlName='hello'>
             <label for="" class="browse">Browse</label>
-            <input type="file" multiple class="file-upload" formControlName='fileUpaload' #fileUpaload (change)='fileUploadChange()'>
+            <input type="file" name='fileUpaload' multiple accept=".map" class="file-upload" formControlName='fileUpaload' #fileUpaload (change)='fileUploadChange()'>
             <div class="form-item">
               <input type="submit" value="Save" class="btn-save" [disabled]="!fileUploadForm.valid" [ngClass]="{'btn-disabled':!fileUploadForm.valid}">
               <input type="button" value="cancel" (click)='showFileUpload(col)' class="btn-cancel">
@@ -67,10 +67,13 @@
               <img class='author-info-avatar-img' alt='user avatar' src='https://images.unsplash.com/placeholder-avatars/extra-large.jpg?dpr=1&auto=compress,format&fit=crop&w=64&h=64&q=80&cs=tinysrgb&crop=faces&bg=fff' />
               </a>
           </span>
-        <div class='author-info-name'>
-          <a class='author-info-name-link'>{{col.pDirector}}</a>
-        </div>
+          <div class='author-info-name'>
+            <a class='author-info-name-link'>{{col.pDirector}}</a>
+          </div>
         </span>
+      </div>
+      <div class="delete-project">
+        <img src="../../assets/delete.png" alt="delete project" (click)='deleteProject(col)'>
       </div>
     </div>
   </div>

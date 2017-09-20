@@ -18,6 +18,8 @@ import { Login } from './login/login.component';
 import { PreviewComponent } from './preview/preview.component';
 import { JoinComponent } from './join/join.component';
 import { ProjectComponent } from './project/project.component';
+import { FileValueAccessor } from './utils/file-control-value-accessor';
+import { FileValidator } from './utils/file-input.validator';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,8 @@ import { ProjectComponent } from './project/project.component';
     PreviewComponent,
     JoinComponent,
     ProjectComponent,
+    FileValueAccessor,
+    FileValidator
   ],
   imports: [
     BrowserModule,

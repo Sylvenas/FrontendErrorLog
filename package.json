@@ -1,8 +1,8 @@
 {
-  "name": "frontend-error-log",
-  "version": "1.0.0",
+  "name": "frontend-errlogger",
+  "version": "0.0.1",
   "description": "front end error log",
-  "main": "errlogger.js",
+  "main": "./dist/errlogger.js",
   "scripts": {
     "start": "webpack-dev-server --config webpack.config.js --progress --colors --hot --inline",
     "build": "webpack --config webpack.build.js --progress --colors",
@@ -13,7 +13,7 @@
     "type": "git",
     "url": "git+https://github.com/Sylvenas/fontEndErrorLog.git"
   },
-  "author": "",
+  "author": "little forest",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Sylvenas/fontEndErrorLog/issues"

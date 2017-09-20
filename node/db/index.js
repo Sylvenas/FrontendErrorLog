@@ -54,7 +54,16 @@ exports.newProject = function (projectInfo, callback) {
     })
 }
 
-//根据用户查询项目集合
+// 删除项目
+exports.deleteProject = function (projectInfo, callback) {
+    var collection = db.collection('user');
+    collection.update({ "_id": ObjectId(projectInfo.userId) }, { $pull: { 'projects': { pId: projectInfo.pId } } }, function (err, doc) {
+        if (err) throw err;
+        callback(true)
+    })
+}
+
+// 根据用户查询项目集合
 exports.getColsByUserId = function (userId, callback) {
     var collection = db.collection('user');
     collection.find({ "_id": ObjectId(userId) }).toArray(function (err, docs) {
@@ -63,7 +72,7 @@ exports.getColsByUserId = function (userId, callback) {
     })
 }
 
-//根据项目ID查询具体错误信息
+// 根据项目ID查询具体错误信息
 exports.getErrInfosByProId = function (proId, callback) {
     var col = db.collection('projectErrors');
     col.find(proId).toArray(function (err, docs) {

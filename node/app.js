@@ -6,12 +6,15 @@ var axios = require('axios');
 var fs = require('fs');
 var path = require('path');
 var uuidv4 = require('uuid/v4');
+var multer = require('multer');
+var multipartMiddleware = require('connect-multiparty')();
 
 var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 
 var db = require('./db');
+var util = require('./utils');
 
 
 var server = server.listen(3333, function () {
@@ -38,6 +41,8 @@ var createServer = function () {
 
     app.use(bodyParser.json());
 
+    app.use(bodyParser.urlencoded({ extended: false }));
+
     app.use(cookieParser());
 
     app.use(function (req, res, next) {
@@ -55,9 +60,11 @@ var createServer = function () {
     app.post('/sendErrInfo', function (req, res) {
         var _this = this;
         var obj = req.body;
+        var pId = obj.pId;
+        var filename = obj.filename;
         var _res = res;
 
-        fs.readFile('./map/app.js.map', 'utf8', function (err, data) {
+        fs.readFile(`./${pId}/${filename}.map`, 'utf8', function (err, data) {
             var smc = new sourceMap.SourceMapConsumer(JSON.parse(data));
             var sourse = smc.originalPositionFor({
                 line: req.body.line,
@@ -144,9 +151,18 @@ var createServer = function () {
             res.send(JSON.stringify(data))
         })
     })
-    //单个项目上传和修改soursemap文件
-    app.post('/api/uploadSM', function (req, res) {
 
+    // 删除项目
+    app.post('/api/deleteProject', function (req, res) {
+        var projectInfo = req.body;
+        util.deleteFolderRecursive(`map/${projectInfo.pId}`);
+        db.deleteProject(projectInfo, function (status) {
+            let data = {
+                status,
+                msg: '删除项目成功'
+            }
+            res.send(JSON.stringify(data))
+        })
     })
 
     //根据用户查询错误信息
@@ -177,6 +193,32 @@ var createServer = function () {
             }
             res.send(JSON.stringify(data))
         })
+    })
+    var createFolder = function (folder) {
+        try {
+            fs.accessSync(folder);
+        } catch (e) {
+            fs.mkdirSync(folder);
+        }
+    };
+    var storage = multer.diskStorage({
+        destination: function (req, file, cb) {
+            let uploadFolder = `map/${req.body.pId}/`
+            createFolder(uploadFolder)
+            cb(null, uploadFolder)
+        },
+        filename: function (req, file, cb) {
+            cb(null, file.originalname)
+        }
+    })
+    var upload = multer({ storage: storage });
+
+    //单个项目上传和修改soursemap文件
+    app.post('/api/uploadSM', upload.array('fileUpaload', 20), function (req, res) {
+        res.send(JSON.stringify({
+            status: true,
+            msg: '上传成功',
+        }))
     })
 }
 

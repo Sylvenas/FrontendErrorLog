@@ -1,23 +1,17 @@
 const path = require('path');
 const webpack = require('webpack')
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: [
-        path.join(__dirname, './src/errlogger.js'),
+        path.join(__dirname, './src/index.ts'),
     ],
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'errlogger.js',
+        filename: 'frontErrLog.js',
     },
     devtool: 'source-map',
     module: {
         rules: [
-            {
-                test: /\.(js)$/,
-                loader: require.resolve('babel-loader'),
-
-            },
             {
                 test: /\.(ts)$/,
                 loader: require.resolve('ts-loader'),

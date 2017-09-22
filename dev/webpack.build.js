@@ -9,7 +9,6 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'app.js',
-        chunkFilename: '[name].js'
     },
     devtool: 'source-map',
     module: {

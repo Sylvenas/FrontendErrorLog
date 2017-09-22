@@ -1,15 +1,13 @@
-import ErrLogger from '../src/errlogger';
+import FrontErrLog from './util';
 
-let errlogger = new ErrLogger({
+let errlogger = new FrontErrLog({
     remoteLogging: true,
     remoteSettings: {
         url: 'http://39.108.124.75:3333/sendErrInfo',
-        proId: '5f3b31ac-4433-40a1-bd24-0e88c6d4f78f',
+        proId: '2a4db3c3-622b-4eea-b1ea-5e528fe54f24',
     }
 });
 
-var arr = null;
+var hello = null;
 
-if (arr.length + 1) {
-    console.log(a)
-}
+console.log(hello.length);

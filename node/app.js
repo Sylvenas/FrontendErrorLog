@@ -41,7 +41,7 @@ var createServer = function () {
 
     app.use(bodyParser.json());
 
-    app.use(bodyParser.urlencoded({ extended: false }));
+    app.use(bodyParser.urlencoded({ extended: true }));
 
     app.use(cookieParser());
 
@@ -60,16 +60,19 @@ var createServer = function () {
     app.post('/sendErrInfo', function (req, res) {
         var _this = this;
         var obj = req.body;
-        var pId = obj.pId;
+        var pId = obj.proId;
         var filename = obj.filename;
         var _res = res;
+        //fs.readFile('./map/app.js.map', 'utf8', function (err, data) {
+        fs.readFile(`./map/${pId}/${filename}.map`, 'utf8', function (err, data) {
 
-        fs.readFile(`./${pId}/${filename}.map`, 'utf8', function (err, data) {
-            var smc = new sourceMap.SourceMapConsumer(JSON.parse(data));
+            //console.log(JSON.parse(data))
+            var smc = new sourceMap.SourceMapConsumer(data);
             var sourse = smc.originalPositionFor({
-                line: req.body.line,
-                column: req.body.column
+                line: req.body.line * 1,
+                column: req.body.column * 1
             })
+            console.log(sourse);
             obj.source = sourse;
             setData(obj);
             db.insert(JSON.parse(JSON.stringify(obj)));

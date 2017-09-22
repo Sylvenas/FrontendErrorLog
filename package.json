@@ -1,8 +1,8 @@
 {
-  "name": "frontend-errlogger",
-  "version": "0.0.1",
+  "name": "frontend-errlog",
+  "version": "0.0.2",
   "description": "front end error log",
-  "main": "./dist/errlogger.js",
+  "main": "./dist/index.js",
   "scripts": {
     "start": "webpack-dev-server --config webpack.config.js --progress --colors --hot --inline",
     "build": "webpack --config webpack.build.js --progress --colors",

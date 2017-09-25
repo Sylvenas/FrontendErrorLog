@@ -7,7 +7,7 @@
     "start": "webpack-dev-server --config webpack.config.js --progress --colors --hot --inline",
     "build": "webpack --config webpack.build.js --progress --colors",
     "lib": "babel src -d lib --ignore **/*.spec.js",
-    "dev":"webpack --config dev/webpack.build.js --progress --colors"
+    "dev": "webpack --config dev/webpack.build.js --progress --colors"
   },
   "repository": {
     "type": "git",

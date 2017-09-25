@@ -3,6 +3,9 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTableModule, MatPaginatorModule } from '@angular/material';
+
 import { AppRoutingModule } from './app-routing.module';
 
 import { AuthGuard } from './guard/auth.guard';
@@ -37,7 +40,10 @@ import { FileValidator } from './utils/file-input.validator';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpModule
+    HttpModule,
+    NoopAnimationsModule,
+    MatTableModule,
+    MatPaginatorModule
   ],
   providers: [
     LoginService,

@@ -17,7 +17,6 @@ npm install --save frontend-errlog
 ```js
 import FrontErrLog from 'frontend-errlog';
 ```
-
 ``` js
 let errlogger = new FrontErrLog({
     remoteLogging: true,

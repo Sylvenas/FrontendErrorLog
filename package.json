@@ -1,6 +1,6 @@
 {
   "name": "frontend-errlog",
-  "version": "0.0.3",
+  "version": "1.0.0",
   "description": "front end error log",
   "main": "./dist/index.js",
   "scripts": {

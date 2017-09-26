@@ -1,6 +1,6 @@
 {
   "name": "frontend-errlog",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "front end error log",
   "main": "./dist/index.js",
   "scripts": {
@@ -14,7 +14,7 @@
     "url": "git+https://github.com/Sylvenas/fontEndErrorLog.git"
   },
   "author": "little forest",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/Sylvenas/fontEndErrorLog/issues"
   },

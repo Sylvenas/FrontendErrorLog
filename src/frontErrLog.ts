@@ -12,7 +12,7 @@ interface Conf {
     }
 }
 
-export default class FrontErrLog {
+export default class FrontendErrLog {
 
     private options: Conf;
     private browserInfo: Browser;

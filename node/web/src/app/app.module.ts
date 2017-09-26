@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { MatTableModule, MatPaginatorModule } from '@angular/material';
+import { MatTableModule, MatPaginatorModule,MatTooltipModule } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -43,7 +43,8 @@ import { FileValidator } from './utils/file-input.validator';
     HttpModule,
     NoopAnimationsModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatTooltipModule
   ],
   providers: [
     LoginService,

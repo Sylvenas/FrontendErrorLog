@@ -1,3 +1,3 @@
-import FrontErrLog from './frontErrLog';
+import FrontendErrLog from './frontErrLog';
 
-export default FrontErrLog;
+export default FrontendErrLog;

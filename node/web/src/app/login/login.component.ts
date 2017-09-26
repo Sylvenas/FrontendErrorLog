@@ -11,9 +11,9 @@ import { LoginService } from '../services/login/login.service';
 
 export class Login {
 
-    private passwordErr: boolean = false;
+    passwordErr: boolean = false;
 
-    private loginForm: FormGroup;
+    loginForm: FormGroup;
     private email: string = '';
     private username: string = '';
     private password: string = '';

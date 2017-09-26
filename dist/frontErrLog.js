@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var browser_1 = require("./browser");
-var FrontErrLog = (function () {
-    function FrontErrLog(userConf) {
+var FrontendErrLog = (function () {
+    function FrontendErrLog(userConf) {
         var _this = this;
         this.errListener = function (e) {
             if (_this.options.detailedErrors) {
@@ -50,7 +50,7 @@ var FrontErrLog = (function () {
         window.removeEventListener('error', this.errListener);
         window.addEventListener('error', this.errListener);
     }
-    FrontErrLog.prototype.detailedErrors = function (e) {
+    FrontendErrLog.prototype.detailedErrors = function (e) {
         var i = this.errorData(e);
         var helpPath = encodeURI("https://stackoverflow.com/search?q=" + i.error.split(' ').join('+'));
         var str = [
@@ -72,7 +72,7 @@ var FrontErrLog = (function () {
             console.log(str.replace(/%c/gi, ''));
         }
     };
-    FrontErrLog.prototype.remoteLogging = function (e, remoteSettings) {
+    FrontendErrLog.prototype.remoteLogging = function (e, remoteSettings) {
         if (!remoteSettings.url) {
             throw new Error('Provide remote URL to log errors remotely');
         }
@@ -108,7 +108,7 @@ var FrontErrLog = (function () {
             }
         };
     };
-    FrontErrLog.prototype.errorData = function (e) {
+    FrontendErrLog.prototype.errorData = function (e) {
         var filename = e.filename.lastIndexOf('/');
         var datetime = new Date().toString();
         //userAgent only for POST request purposes, not required in pretty print
@@ -124,12 +124,12 @@ var FrontErrLog = (function () {
             userAgent: navigator.userAgent || window.navigator.userAgent
         };
     };
-    FrontErrLog.prototype.serializeData = function (params) {
+    FrontendErrLog.prototype.serializeData = function (params) {
         return Object.keys(params).map(function (k) {
             return encodeURIComponent(k) + "=" + encodeURIComponent(params[k]);
         }).join('&');
     };
-    return FrontErrLog;
+    return FrontendErrLog;
 }());
-exports.default = FrontErrLog;
+exports.default = FrontendErrLog;
 //# sourceMappingURL=frontErrLog.js.map

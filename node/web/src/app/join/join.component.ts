@@ -12,12 +12,12 @@ import { JoinService } from '../services/join/join.service';
 })
 export class JoinComponent implements OnInit {
 
-  private joinForm: FormGroup;
+  joinForm: FormGroup;
   private email: string = '';
   private username: string = '';
   private password: string = '';
 
-  private isRegistered: boolean = false;
+  isRegistered: boolean = false;
 
   constructor(private fb: FormBuilder, private joinService: JoinService, private router: Router) {
     this.joinForm = fb.group({

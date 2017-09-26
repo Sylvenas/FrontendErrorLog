@@ -17,7 +17,7 @@ interface errType {
     column: number,                 // 源代码列数
     line: number,                   // 源代码行数
     name: string,                   // 报错的名称
-    source: string                   // 源代码路径
+    source: string                  // 源代码路径
   },
   sourceFile?: string,
   linCol?: string,
@@ -41,10 +41,11 @@ interface errType {
 export class ProjectComponent implements OnInit, OnDestroy {
 
   private proId: string = '';
-  private errInfos: Array<errType> = [];
+  errInfos: Array<errType> = [];
+  dataChange: BehaviorSubject<errType[]> = new BehaviorSubject<errType[]>([]);
 
-   displayedColumns = ['fileName', 'error', 'source', 'line,column', 'userAgent', 'datetime'];
-  private dataSource: any | null;
+  displayedColumns = ['fileName', 'error', 'source', 'line,column', 'userAgent', 'datetime'];
+  dataSource: any | null;
 
   @ViewChild(MdPaginator) paginator: MdPaginator;
 
@@ -56,16 +57,11 @@ export class ProjectComponent implements OnInit, OnDestroy {
       .subscribe(infos => {
         this.errInfos = infos.data.errors.map(item => {
           item.sourceFile = item.source.source;
-          item.linCol = `${item.source.line},${item.source.column}`
+          item.linCol = `${item.source.line || item.line},${item.source.column || item.column}`
           return item;
         });
-        console.log(this.errInfos)
+        this.dataSource = new ErrInfosDataSource(this.errInfos, this.paginator, this.dataChange);
       });
-
-    //this.dataSource = this.errInfos
-
-    this.dataSource = new ExampleDataSource(this.errInfos, this.paginator);
-
   }
 
   ngOnDestroy() {
@@ -73,21 +69,20 @@ export class ProjectComponent implements OnInit, OnDestroy {
   }
 }
 
-export class ExampleDataSource extends DataSource<any> {
-  constructor(private _errInfos: Array<errType>, private _paginator: MdPaginator) {
+export class ErrInfosDataSource extends DataSource<any> {
+  constructor(private _errInfos: Array<errType>, private _paginator: MdPaginator, private _dataChange: BehaviorSubject<errType[]>) {
     super();
   }
 
   /** Connect function called by the table to retrieve one stream containing the data to render. */
   connect(): Observable<errType[]> {
     const displayDataChanges = [
+      this._dataChange,
       this._paginator.page,
     ];
 
     return Observable.merge(...displayDataChanges).map(() => {
-      const data = this._errInfos;
-
-      // Grab the page's slice of data.
+      const data = this._errInfos.slice().reverse();
       const startIndex = this._paginator.pageIndex * this._paginator.pageSize;
       return data.splice(startIndex, this._paginator.pageSize);
     });

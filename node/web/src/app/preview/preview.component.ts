@@ -14,7 +14,7 @@ import { FileValidator } from '../utils/file-input.validator';
 })
 export class PreviewComponent implements OnInit {
 
-  private imgs: Array<string> = [
+  imgs: Array<string> = [
     "https://images.unsplash.com/photo-1467913356746-bcd9e501b9d5?dpr=1&auto=compress,format&fit=max&w=376&q=80&cs=tinysrgb&crop=",
     "https://images.unsplash.com/photo-1503321198697-12670ff8acdd?dpr=1&auto=compress,format&fit=max&w=376&q=80&cs=tinysrgb&crop=",
     "https://images.unsplash.com/photo-1495161054557-8377ed519797?dpr=1&auto=compress,format&fit=max&w=376&q=80&cs=tinysrgb&crop=",
@@ -28,18 +28,18 @@ export class PreviewComponent implements OnInit {
 
   ];
 
-  private isShowNewForm: boolean = false;
-  private isHavePro: boolean = false;
-  private collections: Array<{
+  isShowNewForm: boolean = false;
+  isHavePro: boolean = false;
+  collections: Array<{
     pId: string,
     pName: string,
     updateTime: string,
     showFileUpload: any
   }> = [];
-  private username: string = '';
+  username: string = '';
 
-  private newProjectForm: FormGroup;
-  private fileUploadForm: FormGroup;
+  newProjectForm: FormGroup;
+  fileUploadForm: FormGroup;
 
   @ViewChild('fileUpaload') fileUpaload;
 
@@ -72,7 +72,7 @@ export class PreviewComponent implements OnInit {
     })
   }
 
-  private showNewFrom() {
+  showNewFrom() {
     this.isShowNewForm = !this.isShowNewForm;
   }
 

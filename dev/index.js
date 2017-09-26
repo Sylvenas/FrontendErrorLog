@@ -1,6 +1,6 @@
-import FrontErrLog from './util';
+import FrontendErrLog from './util';
 
-let errlogger = new FrontErrLog({
+let errlogger = new FrontendErrLog({
     remoteLogging: true,
     remoteSettings: {
         url: 'http://39.108.124.75:3333/sendErrInfo',

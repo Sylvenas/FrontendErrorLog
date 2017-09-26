@@ -1,4 +1,5 @@
-import { Component } from '@angular/core'
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import * as hljs from 'highlight.js';
 
 @Component({
     selector: 'app-home',
@@ -6,6 +7,20 @@ import { Component } from '@angular/core'
     styleUrls: ['./home.component.css']
 })
 
-export class Home {
-    
+export class Home implements OnInit {
+    example: string = `
+    let errlogger = new FrontendErrLog({
+        detailedErrors: true,
+        remoteLogging: true,
+        remoteSettings: {
+            url: 'http://xxxxx:xxxx/sendErrInfo',
+            proId: 'your peojectId',
+        }
+    });`
+
+    ngOnInit() {
+        hljs.initHighlightingOnLoad();
+    }
+
+
 }
